@@ -1,4 +1,0 @@
-metric,accuracy,time_ms
-cosine,0.7876,4250.5
-euclidean,0.8319,1890.3
-fidelity,0.7965,3980.2

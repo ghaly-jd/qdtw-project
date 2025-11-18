@@ -26,7 +26,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 
 def vqd_quantum_pca(X, n_components=4, num_qubits=None, max_depth=2, penalty_scale=10.0, 
-                    maxiter=100, verbose=True, validate=True):
+                    maxiter=100, ramped_penalties=True, entanglement='ladder',
+                    verbose=True, validate=True):
     """
     Perform PCA using Variational Quantum Deflation.
     
@@ -44,10 +45,14 @@ def vqd_quantum_pca(X, n_components=4, num_qubits=None, max_depth=2, penalty_sca
     max_depth : int
         Maximum circuit depth (layers of rotations)
     penalty_scale : float or 'auto'
-        Penalty weight λ for orthogonality constraints (5-20 × spectral gap).
+        Base penalty weight λ for orthogonality constraints (5-20 × spectral gap).
         If 'auto', automatically determined from spectral gap.
     maxiter : int
         Maximum optimization iterations per eigenvector
+    ramped_penalties : bool
+        If True, increase penalties progressively (×1.0, ×1.5, ×2.0...) to reduce late-mode mixing
+    entanglement : str
+        Entanglement pattern: 'ladder', 'full', or 'alternating'
     verbose : bool
         Print progress information
     validate : bool
@@ -90,7 +95,9 @@ def vqd_quantum_pca(X, n_components=4, num_qubits=None, max_depth=2, penalty_sca
         print(f"Qubits: {num_qubits} (state dimension: {state_dim})")
         print(f"Target: {n_components} principal components")
         print(f"Circuit depth: {max_depth}")
+        print(f"Entanglement: {entanglement}")
         print(f"Penalty scale: {penalty_scale}")
+        print(f"Ramped penalties: {ramped_penalties}")
     
     # Classical PCA for validation
     if validate:
@@ -145,17 +152,24 @@ def vqd_quantum_pca(X, n_components=4, num_qubits=None, max_depth=2, penalty_sca
             # Define objective function with orthogonality penalties
             def objective(theta):
                 # Build quantum circuit
-                qc = _build_quantum_ansatz(theta, num_qubits, max_depth)
+                qc = _build_quantum_ansatz(theta, num_qubits, max_depth, entanglement)
                 statevector = Statevector(qc).data
                 
                 # Primary term: ⟨ψ|H|ψ⟩
                 expectation = np.real(np.conj(statevector) @ H @ statevector)
                 
                 # Penalty terms: λ_j |⟨ψ|ψ_j⟩|²
+                # With ramped penalties: λ increases with r
                 penalty = 0.0
                 for j, prev_state in enumerate(found_statevectors):
                     overlap = np.abs(np.vdot(prev_state, statevector))
-                    penalty += penalty_scale * overlap**2
+                    if ramped_penalties:
+                        # Ramp: ×1.0, ×1.5, ×2.0, ×2.5...
+                        ramp_factor = 1.0 + 0.5 * r
+                        effective_penalty = penalty_scale * ramp_factor
+                    else:
+                        effective_penalty = penalty_scale
+                    penalty += effective_penalty * overlap**2
                 
                 return expectation + penalty
             
@@ -181,7 +195,7 @@ def vqd_quantum_pca(X, n_components=4, num_qubits=None, max_depth=2, penalty_sca
         result = best_result
         
         # Get optimized statevector
-        qc_opt = _build_quantum_ansatz(result.x, num_qubits, max_depth)
+        qc_opt = _build_quantum_ansatz(result.x, num_qubits, max_depth, entanglement)
         statevector_opt = Statevector(qc_opt).data
         
         # Extract eigenvector (truncate to n_features and apply Gram-Schmidt)
@@ -236,14 +250,27 @@ def vqd_quantum_pca(X, n_components=4, num_qubits=None, max_depth=2, penalty_sca
     return U_vqd, eigenvalues_vqd, logs
 
 
-def _build_quantum_ansatz(theta, num_qubits, depth):
+def _build_quantum_ansatz(theta, num_qubits, depth, entanglement='ladder'):
     """
     Build hardware-efficient quantum ansatz for VQD.
     
     Uses:
     - R_Y rotations for each qubit (parameterized)
-    - CNOT ladder for entanglement
+    - Entanglement layer (ladder, full, or alternating)
     - Repeated for 'depth' layers
+    
+    Parameters
+    ----------
+    theta : ndarray
+        Parameters for the circuit
+    num_qubits : int
+        Number of qubits
+    depth : int
+        Number of layers
+    entanglement : str
+        'ladder': CNOT ladder (i, i+1)
+        'full': All-to-all CNOT (every pair)
+        'alternating': Alternating even-odd pairs
     """
     qc = QuantumCircuit(num_qubits)
     
@@ -254,9 +281,30 @@ def _build_quantum_ansatz(theta, num_qubits, depth):
             qc.ry(theta[param_idx], qubit)
             param_idx += 1
         
-        # Entangling layer (CNOT ladder)
-        for qubit in range(num_qubits - 1):
-            qc.cx(qubit, qubit + 1)
+        # Entangling layer
+        if entanglement == 'ladder':
+            # CNOT ladder: 0→1, 1→2, 2→3, ...
+            for qubit in range(num_qubits - 1):
+                qc.cx(qubit, qubit + 1)
+                
+        elif entanglement == 'full':
+            # Full entanglement: all pairs (expensive but thorough)
+            for i in range(num_qubits):
+                for j in range(i + 1, num_qubits):
+                    qc.cx(i, j)
+                    
+        elif entanglement == 'alternating':
+            # Alternating pattern: even pairs, then odd pairs
+            if layer % 2 == 0:
+                # Even layer: (0,1), (2,3), (4,5), ...
+                for qubit in range(0, num_qubits - 1, 2):
+                    qc.cx(qubit, qubit + 1)
+            else:
+                # Odd layer: (1,2), (3,4), (5,6), ...
+                for qubit in range(1, num_qubits - 1, 2):
+                    qc.cx(qubit, qubit + 1)
+        else:
+            raise ValueError(f"Unknown entanglement pattern: {entanglement}")
     
     return qc
 

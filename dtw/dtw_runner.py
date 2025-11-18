@@ -4,7 +4,8 @@ Dynamic Time Warping (DTW) for k-D sequences.
 This module provides DTW distance computation with multiple metrics:
 - Cosine distance
 - Euclidean distance  
-- Fidelity distance
+- Fidelity distance (classical approximation)
+- Quantum Fidelity distance (real SWAP test)
 
 Supports:
 - Windowing constraints for efficiency
@@ -16,6 +17,14 @@ import logging
 from typing import Optional, Tuple
 
 import numpy as np
+
+# Import real quantum fidelity (optional)
+try:
+    from quantum.real_fidelity import quantum_fidelity_distance
+    QUANTUM_AVAILABLE = True
+except ImportError:
+    QUANTUM_AVAILABLE = False
+    logging.warning("Real quantum fidelity not available. Install qiskit to enable.")
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -124,7 +133,8 @@ def dtw_distance(
     seqA: np.ndarray,
     seqB: np.ndarray,
     metric: str = "cosine",
-    window: Optional[int] = None
+    window: Optional[int] = None,
+    quantum_shots: int = 1024
 ) -> float:
     """
     Compute Dynamic Time Warping distance between two sequences.
@@ -138,10 +148,12 @@ def dtw_distance(
         metric: Distance metric, one of:
                 - "cosine": 1 - cosine_similarity
                 - "euclidean": L2 distance
-                - "fidelity": 1 - |<a_hat, b_hat>|²
+                - "fidelity": 1 - |<a_hat, b_hat>|² (classical approximation)
+                - "quantum_fidelity": Real quantum SWAP test (requires qiskit)
         window: Optional Sakoe-Chiba window constraint.
                 If provided, only consider alignments within
                 |i-j| <= window. None = no constraint.
+        quantum_shots: Number of shots for quantum fidelity measurement (default: 1024)
 
     Returns:
         distance: DTW distance >= 0
@@ -167,10 +179,18 @@ def dtw_distance(
         dist_func = euclidean_distance
     elif metric == "fidelity":
         dist_func = fidelity_distance
+    elif metric == "quantum_fidelity":
+        if not QUANTUM_AVAILABLE:
+            raise ImportError(
+                "Real quantum fidelity requires qiskit. "
+                "Install with: pip install qiskit qiskit-aer"
+            )
+        # Wrap quantum fidelity with shots parameter
+        dist_func = lambda a, b: quantum_fidelity_distance(a, b, shots=quantum_shots)
     else:
         raise ValueError(
             f"Unknown metric '{metric}'. "
-            f"Choose from: cosine, euclidean, fidelity"
+            f"Choose from: cosine, euclidean, fidelity, quantum_fidelity"
         )
 
     T1, k1 = seqA.shape
@@ -225,7 +245,8 @@ def one_nn(
     train_labels: list[int],
     test_seq: np.ndarray,
     metric: str = "cosine",
-    window: Optional[int] = None
+    window: Optional[int] = None,
+    quantum_shots: int = 1024
 ) -> Tuple[int, float]:
     """
     Perform 1-Nearest Neighbor classification using DTW distance.
@@ -237,8 +258,9 @@ def one_nn(
         train_seqs: List of training sequences, each shape [T_i, k]
         train_labels: List of integer labels, one per training sequence
         test_seq: Test sequence of shape [T_test, k]
-        metric: Distance metric (cosine, euclidean, or fidelity)
+        metric: Distance metric (cosine, euclidean, fidelity, or quantum_fidelity)
         window: Optional DTW window constraint
+        quantum_shots: Number of shots for quantum fidelity (default: 1024)
 
     Returns:
         predicted_label: Label of nearest neighbor
@@ -264,7 +286,7 @@ def one_nn(
     predicted_label = -1
 
     for seq, label in zip(train_seqs, train_labels):
-        dist = dtw_distance(test_seq, seq, metric=metric, window=window)
+        dist = dtw_distance(test_seq, seq, metric=metric, window=window, quantum_shots=quantum_shots)
 
         if dist < min_distance:
             min_distance = dist

@@ -89,17 +89,18 @@ def quantum_swap_test(
             f"State dimension must be power of 2, got {dim}"
         )
     
-    # Normalize states
+    # Normalize states (warn if far from 1.0)
     norm_a = np.linalg.norm(state_a)
     norm_b = np.linalg.norm(state_b)
     
-    if not np.isclose(norm_a, 1.0, atol=1e-6):
+    if not np.isclose(norm_a, 1.0, atol=1e-3):
         logger.warning(f"Normalizing state_a (norm={norm_a:.6f})")
-        state_a = state_a / norm_a
     
-    if not np.isclose(norm_b, 1.0, atol=1e-6):
+    if not np.isclose(norm_b, 1.0, atol=1e-3):
         logger.warning(f"Normalizing state_b (norm={norm_b:.6f})")
-        state_b = state_b / norm_b
+    
+    # Let Qiskit handle normalization to avoid precision issues
+    # We'll use normalize=True in the initialize() call
     
     logger.info(f"Building SWAP test circuit for {n_qubits}-qubit states")
     
@@ -112,9 +113,9 @@ def quantum_swap_test(
     # Build circuit
     qc = QuantumCircuit(anc, reg_a, reg_b, creg)
     
-    # Step 1: Initialize states |ψ⟩ and |φ⟩
-    qc.initialize(state_a, reg_a)
-    qc.initialize(state_b, reg_b)
+    # Step 1: Initialize states |ψ⟩ and |φ⟩ (let Qiskit normalize)
+    qc.initialize(state_a, reg_a, normalize=True)
+    qc.initialize(state_b, reg_b, normalize=True)
     
     # Step 2: Apply Hadamard to ancilla
     qc.h(anc)

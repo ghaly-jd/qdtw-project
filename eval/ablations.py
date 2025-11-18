@@ -154,7 +154,8 @@ def run_distance_choice_ablation(
     test_seqs: List[np.ndarray],
     test_labels: List[int],
     methods: List[str] = ['Uq', 'Uc'],
-    metrics: List[str] = ['cosine', 'euclidean', 'fidelity']
+    metrics: List[str] = ['cosine', 'euclidean', 'fidelity', 'quantum_fidelity'],
+    quantum_shots: int = 256
 ) -> pd.DataFrame:
     """
     Ablation: Compare different distance metrics.
@@ -165,7 +166,8 @@ def run_distance_choice_ablation(
         test_seqs: Test sequences
         test_labels: Test labels
         methods: PCA methods to test
-        metrics: Distance metrics to test
+        metrics: Distance metrics to test (includes 'quantum_fidelity' for real quantum)
+        quantum_shots: Number of shots for quantum measurements (default: 256, lower for speed)
 
     Returns:
         DataFrame with columns: exp, method, metric, accuracy, time_ms
@@ -191,7 +193,8 @@ def run_distance_choice_ablation(
                     train_labels,
                     test_seq,
                     metric=metric,
-                    window=None
+                    window=None,
+                    quantum_shots=quantum_shots
                 )
                 elapsed = time.time() - start_time
                 total_time += elapsed

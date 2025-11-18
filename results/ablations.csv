@@ -1,7 +1,9 @@
 exp,method,k,metric,setting,accuracy,time_ms
-distance_choice,Uq,,cosine,cosine,0.3,939.1162514686584
-distance_choice,Uq,,euclidean,euclidean,0.15,261.42778396606445
-distance_choice,Uq,,fidelity,fidelity,0.2,984.5088839530945
-distance_choice,Uc,,cosine,cosine,0.3,955.8229565620422
-distance_choice,Uc,,euclidean,euclidean,0.15,262.32365369796753
-distance_choice,Uc,,fidelity,fidelity,0.2,989.0849113464355
+distance_choice,Uq,,cosine,cosine,0.4,559.5161120096842
+distance_choice,Uq,,euclidean,euclidean,0.2,154.80082829793292
+distance_choice,Uq,,fidelity,fidelity,0.26666666666666666,583.5684776306152
+distance_choice,Uq,,quantum_fidelity,quantum_fidelity,0.26666666666666666,143101.74396832785
+distance_choice,Uc,,cosine,cosine,0.4,550.3354867299398
+distance_choice,Uc,,euclidean,euclidean,0.2,151.16650263468426
+distance_choice,Uc,,fidelity,fidelity,0.26666666666666666,576.4089743296306
+distance_choice,Uc,,quantum_fidelity,quantum_fidelity,0.2,144868.47127278644

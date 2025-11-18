@@ -170,6 +170,17 @@ def main():
         default=10,
         help='Number of test samples (default: 10)'
     )
+    parser.add_argument(
+        '--use-quantum',
+        action='store_true',
+        help='Include real quantum fidelity (SWAP test) in distance comparison (slower)'
+    )
+    parser.add_argument(
+        '--quantum-shots',
+        type=int,
+        default=256,
+        help='Number of shots for quantum measurements (default: 256, lower=faster)'
+    )
 
     args = parser.parse_args()
 
@@ -280,12 +291,19 @@ def main():
         current_experiment += 1
         exp_start = time.time()
         
+        # Build metrics list
+        metrics = ['cosine', 'euclidean', 'fidelity']
+        if args.use_quantum:
+            metrics.append('quantum_fidelity')
+        
         logger.info("\n" + "=" * 70)
         logger.info(f"ABLATION {current_experiment}/{total_experiments}: Distance Choice")
         logger.info("=" * 70)
-        logger.info(f"Testing 6 configurations (Uq/Uc × cosine/euclidean/fidelity)")
+        logger.info(f"Testing {len(metrics)*2} configurations (Uq/Uc × {'/'.join(metrics)})")
+        if args.use_quantum:
+            logger.info(f"⚛️  REAL QUANTUM MODE: Using SWAP test with {args.quantum_shots} shots")
         logger.info(f"Each config: {len(test_seqs)} test samples × {len(train_seqs)} train samples")
-        logger.info(f"Estimated time: ~{len(test_seqs) * len(train_seqs) * 6 * 0.001:.1f}s")
+        logger.info(f"Estimated time: ~{len(test_seqs) * len(train_seqs) * len(metrics) * 2 * 0.001:.1f}s")
         logger.info(f"Progress: Experiment {current_experiment}/{total_experiments}")
 
         if args.use_sample_data:
@@ -296,7 +314,8 @@ def main():
                 test_seqs,
                 test_labels,
                 methods=['Uq', 'Uc'],
-                metrics=['cosine', 'euclidean', 'fidelity']
+                metrics=metrics,
+                quantum_shots=args.quantum_shots
             )
         else:
             # Load both Uq and Uc
@@ -310,14 +329,14 @@ def main():
             if uq_train:
                 uq_results = run_distance_choice_ablation(
                     uq_train, uq_train_labels, uq_test, uq_test_labels,
-                    methods=['Uq'], metrics=['cosine', 'euclidean', 'fidelity']
+                    methods=['Uq'], metrics=metrics, quantum_shots=args.quantum_shots
                 )
                 results_list.append(uq_results)
 
             if uc_train:
                 uc_results = run_distance_choice_ablation(
                     uc_train, uc_train_labels, uc_test, uc_test_labels,
-                    methods=['Uc'], metrics=['cosine', 'euclidean', 'fidelity']
+                    methods=['Uc'], metrics=metrics, quantum_shots=args.quantum_shots
                 )
                 results_list.append(uc_results)
 

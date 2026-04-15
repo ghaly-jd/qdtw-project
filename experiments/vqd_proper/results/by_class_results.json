@@ -1,0 +1,241 @@
+{
+  "config": {
+    "k": 8,
+    "seed": 42,
+    "n_train": 300,
+    "n_test": 60,
+    "pre_k": 16,
+    "date": "2025-11-24T20:53:44.652059"
+  },
+  "overall": {
+    "pca": 0.7833333333333333,
+    "vqd": 0.8666666666666667,
+    "delta": 0.08333333333333337
+  },
+  "by_class": {
+    "0": {
+      "pca_accuracy": 0.3333333333333333,
+      "vqd_accuracy": 1.0,
+      "delta": 0.6666666666666667,
+      "count": 3,
+      "class_name": "High arm wave"
+    },
+    "1": {
+      "pca_accuracy": 0.6666666666666666,
+      "vqd_accuracy": 1.0,
+      "delta": 0.33333333333333337,
+      "count": 3,
+      "class_name": "Horizontal wave"
+    },
+    "2": {
+      "pca_accuracy": 1.0,
+      "vqd_accuracy": 1.0,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Hammer"
+    },
+    "3": {
+      "pca_accuracy": 0.6666666666666666,
+      "vqd_accuracy": 0.6666666666666666,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Hand catch"
+    },
+    "4": {
+      "pca_accuracy": 0.3333333333333333,
+      "vqd_accuracy": 0.3333333333333333,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Forward punch"
+    },
+    "5": {
+      "pca_accuracy": 0.6666666666666666,
+      "vqd_accuracy": 0.6666666666666666,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "High throw"
+    },
+    "6": {
+      "pca_accuracy": 0.3333333333333333,
+      "vqd_accuracy": 0.6666666666666666,
+      "delta": 0.3333333333333333,
+      "count": 3,
+      "class_name": "Draw X"
+    },
+    "7": {
+      "pca_accuracy": 1.0,
+      "vqd_accuracy": 1.0,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Draw tick"
+    },
+    "8": {
+      "pca_accuracy": 1.0,
+      "vqd_accuracy": 1.0,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Draw circle (CCW)"
+    },
+    "9": {
+      "pca_accuracy": 1.0,
+      "vqd_accuracy": 1.0,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Hand wave"
+    },
+    "10": {
+      "pca_accuracy": 1.0,
+      "vqd_accuracy": 1.0,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Draw X"
+    },
+    "11": {
+      "pca_accuracy": 1.0,
+      "vqd_accuracy": 1.0,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Draw circle (CW)"
+    },
+    "12": {
+      "pca_accuracy": 1.0,
+      "vqd_accuracy": 1.0,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Hand clap"
+    },
+    "13": {
+      "pca_accuracy": 1.0,
+      "vqd_accuracy": 1.0,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Two hand wave"
+    },
+    "14": {
+      "pca_accuracy": 1.0,
+      "vqd_accuracy": 1.0,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Side boxing"
+    },
+    "15": {
+      "pca_accuracy": 1.0,
+      "vqd_accuracy": 0.6666666666666666,
+      "delta": -0.33333333333333337,
+      "count": 3,
+      "class_name": "Bend"
+    },
+    "16": {
+      "pca_accuracy": 0.3333333333333333,
+      "vqd_accuracy": 1.0,
+      "delta": 0.6666666666666667,
+      "count": 3,
+      "class_name": "Forward kick"
+    },
+    "17": {
+      "pca_accuracy": 0.6666666666666666,
+      "vqd_accuracy": 0.6666666666666666,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Side kick"
+    },
+    "18": {
+      "pca_accuracy": 1.0,
+      "vqd_accuracy": 1.0,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Jogging"
+    },
+    "19": {
+      "pca_accuracy": 0.6666666666666666,
+      "vqd_accuracy": 0.6666666666666666,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Tennis swing"
+    }
+  },
+  "top_vqd_gains": [
+    {
+      "class": 0,
+      "pca_accuracy": 0.3333333333333333,
+      "vqd_accuracy": 1.0,
+      "delta": 0.6666666666666667,
+      "count": 3,
+      "class_name": "High arm wave"
+    },
+    {
+      "class": 16,
+      "pca_accuracy": 0.3333333333333333,
+      "vqd_accuracy": 1.0,
+      "delta": 0.6666666666666667,
+      "count": 3,
+      "class_name": "Forward kick"
+    },
+    {
+      "class": 1,
+      "pca_accuracy": 0.6666666666666666,
+      "vqd_accuracy": 1.0,
+      "delta": 0.33333333333333337,
+      "count": 3,
+      "class_name": "Horizontal wave"
+    },
+    {
+      "class": 6,
+      "pca_accuracy": 0.3333333333333333,
+      "vqd_accuracy": 0.6666666666666666,
+      "delta": 0.3333333333333333,
+      "count": 3,
+      "class_name": "Draw X"
+    },
+    {
+      "class": 2,
+      "pca_accuracy": 1.0,
+      "vqd_accuracy": 1.0,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Hammer"
+    }
+  ],
+  "top_pca_gains": [
+    {
+      "class": 14,
+      "pca_accuracy": 1.0,
+      "vqd_accuracy": 1.0,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Side boxing"
+    },
+    {
+      "class": 17,
+      "pca_accuracy": 0.6666666666666666,
+      "vqd_accuracy": 0.6666666666666666,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Side kick"
+    },
+    {
+      "class": 18,
+      "pca_accuracy": 1.0,
+      "vqd_accuracy": 1.0,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Jogging"
+    },
+    {
+      "class": 19,
+      "pca_accuracy": 0.6666666666666666,
+      "vqd_accuracy": 0.6666666666666666,
+      "delta": 0.0,
+      "count": 3,
+      "class_name": "Tennis swing"
+    },
+    {
+      "class": 15,
+      "pca_accuracy": 1.0,
+      "vqd_accuracy": 0.6666666666666666,
+      "delta": -0.33333333333333337,
+      "count": 3,
+      "class_name": "Bend"
+    }
+  ]
+}

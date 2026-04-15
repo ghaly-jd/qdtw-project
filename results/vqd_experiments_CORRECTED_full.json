@@ -1,0 +1,229 @@
+{
+  "timestamp": "2025-11-24T17:06:33.408813",
+  "config": {
+    "k_values": [
+      2,
+      4,
+      6,
+      8
+    ],
+    "use_procrustes": true,
+    "n_train": 100,
+    "n_test": 100,
+    "random_seed": 42,
+    "pre_k": 8
+  },
+  "results": {
+    "baseline": {
+      "k": 60,
+      "method": "raw",
+      "accuracy": 0.44,
+      "accuracy_mean": 0.44155,
+      "ci_lower": 0.34,
+      "ci_upper": 0.5302499999999998,
+      "time_per_query": 0.0006809091567993164,
+      "speedup": 1.0,
+      "dimensionality": 60
+    },
+    "pca_k2": {
+      "k": 2,
+      "method": "pca",
+      "accuracy": 0.14,
+      "accuracy_mean": 0.14046,
+      "ci_lower": 0.08,
+      "ci_upper": 0.21,
+      "time_per_query": 0.0006603121757507325,
+      "speedup": 1.031192793053023,
+      "dimensionality": 2,
+      "eigenvalues": [
+        44.30405100545156,
+        5.524185928800238
+      ]
+    },
+    "vqd_k2": {
+      "k": 2,
+      "method": "vqd",
+      "basis": "procrustes",
+      "accuracy": 0.14,
+      "accuracy_mean": 0.14010000000000003,
+      "ci_lower": 0.08,
+      "ci_upper": 0.21024999999999977,
+      "time_per_query": 0.0007271933555603028,
+      "speedup": 0.9363522804394653,
+      "dimensionality": 2,
+      "eigenvalues": [
+        44.30405091652853,
+        2.5063616322879088
+      ],
+      "orthogonality_error": 3.1401849173675503e-16,
+      "mean_principal_angle": 45.00026614958745,
+      "max_principal_angle": 89.9999999742163,
+      "procrustes_residual": 1.4142135620854086,
+      "procrustes_improvement": 9.991151465117813e-10,
+      "mean_rayleigh_error": 1.5089121927176847,
+      "eigenvalue_relative_errors": [
+        2.0071085104858676e-09,
+        0.5462930349210299
+      ]
+    },
+    "pca_k4": {
+      "k": 4,
+      "method": "pca",
+      "accuracy": 0.24,
+      "accuracy_mean": 0.24118,
+      "ci_lower": 0.16,
+      "ci_upper": 0.32,
+      "time_per_query": 0.0006579232215881348,
+      "speedup": 1.0349371088554935,
+      "dimensionality": 4,
+      "eigenvalues": [
+        44.30405100545156,
+        5.524185928800238,
+        2.506361639840298,
+        1.5211770667340299
+      ]
+    },
+    "vqd_k4": {
+      "k": 4,
+      "method": "vqd",
+      "basis": "procrustes",
+      "accuracy": 0.3,
+      "accuracy_mean": 0.29957999999999996,
+      "ci_lower": 0.21,
+      "ci_upper": 0.39,
+      "time_per_query": 0.0007399940490722657,
+      "speedup": 0.9201549088847075,
+      "dimensionality": 4,
+      "eigenvalues": [
+        44.3040508302742,
+        2.506361618990584,
+        1.5123654465571692,
+        1.2925880130012453
+      ],
+      "orthogonality_error": 2.234689493823225e-16,
+      "mean_principal_angle": 17.974081717750916,
+      "max_principal_angle": 70.41155825313457,
+      "procrustes_residual": 1.153318360045151,
+      "procrustes_improvement": 0.5367380237685986,
+      "mean_rayleigh_error": 1.0601024330007354,
+      "eigenvalue_relative_errors": [
+        3.9539808555558255e-09,
+        0.5462930373281402,
+        0.396589294012043,
+        0.15027116746084382
+      ]
+    },
+    "pca_k6": {
+      "k": 6,
+      "method": "pca",
+      "accuracy": 0.34,
+      "accuracy_mean": 0.33785000000000004,
+      "ci_lower": 0.25,
+      "ci_upper": 0.43024999999999974,
+      "time_per_query": 0.0006582307815551758,
+      "speedup": 1.0344535319216754,
+      "dimensionality": 6,
+      "eigenvalues": [
+        44.30405100545156,
+        5.524185928800238,
+        2.506361639840298,
+        1.5211770667340299,
+        1.3464422487764574,
+        0.9682725360839214
+      ]
+    },
+    "vqd_k6": {
+      "k": 6,
+      "method": "vqd",
+      "basis": "procrustes",
+      "accuracy": 0.35,
+      "accuracy_mean": 0.3509,
+      "ci_lower": 0.26,
+      "ci_upper": 0.44,
+      "time_per_query": 0.0007227158546447754,
+      "speedup": 0.9421533406569481,
+      "dimensionality": 6,
+      "eigenvalues": [
+        44.30405087012532,
+        2.5063616312665076,
+        2.1318063233021025,
+        3.0674790288412828,
+        1.7079813328224778,
+        1.5248880155061333
+      ],
+      "orthogonality_error": 6.251395402639853e-16,
+      "mean_principal_angle": 29.99197998455382,
+      "max_principal_angle": 89.99827501512742,
+      "procrustes_residual": 1.9995800214713886,
+      "procrustes_improvement": 0.39797628342197733,
+      "mean_rayleigh_error": 0.976139379162277,
+      "eigenvalue_relative_errors": [
+        3.0544892202359e-09,
+        0.5462930351059261,
+        0.1494418485283168,
+        1.0165167460926599,
+        0.268514363965153,
+        0.5748541435176769
+      ]
+    },
+    "pca_k8": {
+      "k": 8,
+      "method": "pca",
+      "accuracy": 0.38,
+      "accuracy_mean": 0.38115,
+      "ci_lower": 0.29,
+      "ci_upper": 0.48,
+      "time_per_query": 0.0006592583656311035,
+      "speedup": 1.0328411322433304,
+      "dimensionality": 8,
+      "eigenvalues": [
+        44.30405100545156,
+        5.524185928800238,
+        2.506361639840298,
+        1.5211770667340299,
+        1.3464422487764574,
+        0.9682725360839214,
+        0.8281063452295662,
+        0.7403701306949857
+      ]
+    },
+    "vqd_k8": {
+      "k": 8,
+      "method": "vqd",
+      "basis": "procrustes",
+      "accuracy": 0.38,
+      "accuracy_mean": 0.38288,
+      "ci_lower": 0.29,
+      "ci_upper": 0.49,
+      "time_per_query": 0.0007340645790100097,
+      "speedup": 0.9275875396652691,
+      "dimensionality": 8,
+      "eigenvalues": [
+        44.30405070152701,
+        2.506361131278544,
+        1.5075487146445554,
+        4.904444204887776,
+        1.1312900354319586,
+        1.3473865670899685,
+        1.0569318223362705,
+        0.9809537244149863
+      ],
+      "orthogonality_error": 1.2182350553510164e-10,
+      "mean_principal_angle": 6.647211798193707e-05,
+      "max_principal_angle": 0.0005317769438554966,
+      "procrustes_residual": 6.091180972132353e-11,
+      "procrustes_improvement": 0.9999999999841882,
+      "mean_rayleigh_error": 1.0579475599966246,
+      "eigenvalue_relative_errors": [
+        6.859972203709094e-09,
+        0.546293125614821,
+        0.39851109645110394,
+        2.2241113228308307,
+        0.15979312409426566,
+        0.3915364908926721,
+        0.27632378187281026,
+        0.3249504318794772
+      ]
+    }
+  }
+}

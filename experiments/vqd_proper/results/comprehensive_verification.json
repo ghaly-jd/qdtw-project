@@ -1,0 +1,20 @@
+{
+  "timestamp": "2025-11-24T19:14:10.836443",
+  "tests": {
+    "test_1_data_sanity": {
+      "passed": true,
+      "checks": {
+        "all_sequences_have_data": true,
+        "consistent_feature_dim": true,
+        "feature_dim": 60,
+        "num_classes": 20,
+        "labels_valid": true,
+        "min_samples_per_class": 20,
+        "max_samples_per_class": 30,
+        "balanced": false,
+        "no_nan": true,
+        "no_inf": true
+      }
+    },
+    "test_2_projection_consistency": {
+      "passed": 

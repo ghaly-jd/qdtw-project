@@ -1,0 +1,115 @@
+{
+  "timestamp": "2025-11-24T18:08:15.078890",
+  "config": {
+    "k_values": [
+      4,
+      6,
+      8,
+      10,
+      12
+    ],
+    "n_train": 300,
+    "n_test": 60,
+    "pre_k": 16,
+    "random_state": 42
+  },
+  "results": {
+    "baseline": {
+      "method": "raw",
+      "k": 60,
+      "accuracy": 0.6833333333333333,
+      "time_per_query": 1.7020449837048848,
+      "speedup": 1.0
+    },
+    "pca_k4": {
+      "method": "pca",
+      "k": 4,
+      "accuracy": 0.6166666666666667,
+      "time_per_query": 1.654044508934021,
+      "speedup": 1.0290200623451171
+    },
+    "vqd_k4": {
+      "method": "vqd",
+      "k": 4,
+      "basis": "procrustes",
+      "accuracy": 0.7666666666666667,
+      "time_per_query": 1.9953139424324036,
+      "speedup": 0.8530211449482447,
+      "orthogonality_error": 3.8614347958007767e-16,
+      "mean_angle": 44.75105429022132,
+      "max_angle": 89.40072314885288
+    },
+    "pca_k6": {
+      "method": "pca",
+      "k": 6,
+      "accuracy": 0.6333333333333333,
+      "time_per_query": 1.698036543528239,
+      "speedup": 1.0023606324563057
+    },
+    "vqd_k6": {
+      "method": "vqd",
+      "k": 6,
+      "basis": "procrustes",
+      "accuracy": 0.8333333333333334,
+      "time_per_query": 2.0334299127260844,
+      "speedup": 0.8370315460851395,
+      "orthogonality_error": 5.247285198509293e-16,
+      "mean_angle": 40.337600490041474,
+      "max_angle": 89.97379342874511
+    },
+    "pca_k8": {
+      "method": "pca",
+      "k": 8,
+      "accuracy": 0.65,
+      "time_per_query": 1.6797223925590514,
+      "speedup": 1.0132894526171226
+    },
+    "vqd_k8": {
+      "method": "vqd",
+      "k": 8,
+      "basis": "procrustes",
+      "accuracy": 0.85,
+      "time_per_query": 2.024155096213023,
+      "speedup": 0.8408668816382838,
+      "orthogonality_error": 5.440428979597978e-16,
+      "mean_angle": 35.64525359951326,
+      "max_angle": 82.83405521671678
+    },
+    "pca_k10": {
+      "method": "pca",
+      "k": 10,
+      "accuracy": 0.6333333333333333,
+      "time_per_query": 1.689842732747396,
+      "speedup": 1.007220938801595
+    },
+    "vqd_k10": {
+      "method": "vqd",
+      "k": 10,
+      "basis": "procrustes",
+      "accuracy": 0.7833333333333333,
+      "time_per_query": 2.004466183980306,
+      "speedup": 0.8491263146805013,
+      "orthogonality_error": 6.385223826427958e-16,
+      "mean_angle": 26.7396048189613,
+      "max_angle": 89.97945892488471
+    },
+    "pca_k12": {
+      "method": "pca",
+      "k": 12,
+      "accuracy": 0.6333333333333333,
+      "time_per_query": 1.6726909240086874,
+      "speedup": 1.0175490039880464
+    },
+    "vqd_k12": {
+      "method": "vqd",
+      "k": 12,
+      "basis": "procrustes",
+      "accuracy": 0.85,
+      "time_per_query": 2.0244088570276895,
+      "speedup": 0.8407614784910045,
+      "orthogonality_error": 9.20535277378377e-16,
+      "mean_angle": 18.58026168944066,
+      "max_angle": 89.92896305593537
+    }
+  }
+}

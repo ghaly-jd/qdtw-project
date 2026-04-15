@@ -1,4 +1,52 @@
+# Dataset (too large for git - download separately)
 MSR-Action-Recognition/
 msr_action_data/
+
+# Python cache
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large generated data (reproducible via pipeline)
+data/frame_bank_std.npy
+results/subspace_std/
+results/splits/
+results/test_exp/
+results/test_exp2/
+results/exp3_vqd_quantum_pca/
+results/ablation_*/
+
+# Logs
+*.log
+nohup.out
+*.out
+
+# Credentials / secrets
+.env
+*.key
+*.pem
